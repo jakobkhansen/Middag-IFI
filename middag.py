@@ -14,12 +14,18 @@ def get_dinner():
     # Find OJD
     ojd = soup.find("span", string="Ole-Johan spiseri")
     ojd = ojd.parent.parent.parent.parent
-    dagens = ojd.find("div", {"class":"dagensmiddag"})
+    ojd = ojd.find("div", {"class":"dagensmiddag"})
 
     # Find and return todays dinner
-    dinners = dagens.find_all("ul", {"class":"dinner"})
-    middager = "    Dagens: " + " ".join(dinners[0].text.split(" ")[:-5]) + "\n"
-    middager += "    Vegetar: " + " ".join(dinners[1].text.split(" ")[:-5])
+    dinners = ojd.find_all("ul", {"class":"dinner"})
+
+    for i in range(len(dinners)):
+        dinners[i] = dinners[i].text.replace("Allergener: se merking på buffeten.", "")
+
+
+
+    middager = "  Dagens: " + dinners[0] + "\n"
+    middager += "  Vegetar: " + dinners[1]
     return middager
 
 
