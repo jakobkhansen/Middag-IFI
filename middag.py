@@ -8,24 +8,23 @@ def get_dinner():
 
     # Gather site
     url = "https://www.sio.no/mat-og-drikke/spisesteder-og-kaffebarer"
-    response = requests.get(url);
+    response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
 
     # Find OJD
     ojd = soup.find("span", string="Ole-Johan spiseri")
-    ojd = ojd.parent.parent.parent.parent
-    ojd = ojd.find("div", {"class":"dagensmiddag"})
+    for _ in range(4):
+        ojd = ojd.parent
 
     # Find and return todays dinner
-    dinners = ojd.find_all("ul", {"class":"dinner"})
+    dinners = ojd.select(".dagensmiddag ul.dinner")
 
     for i in range(len(dinners)):
         dinners[i] = dinners[i].text.replace("Allergener: se merking på buffeten.", "")
 
-
-
-    middager = "  Dagens: " + dinners[0] + "\n"
-    middager += "  Vegetar: " + dinners[1]
+    middager = " - Dagens: " + dinners[0] + "\n"
+    if (len(dinners) > 1):
+        middager += " - Vegetar: " + dinners[1]
     return middager
 
 
