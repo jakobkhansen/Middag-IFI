@@ -22,6 +22,9 @@ def get_dinner():
     for i in range(len(dinners)):
         dinners[i] = dinners[i].text.replace("Allergener: se merking på buffeten.", "")
 
+    if (len(dinners) == 0):
+        return " - Kunne ikke hente middager"
+
     middager = " - Dagens: " + dinners[0]
     if (len(dinners) > 1):
         middager += "\n - Vegetar: " + dinners[1]
