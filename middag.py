@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 def get_dinner():
 
     # Gather site
-    url = "https://www.sio.no/mat-og-drikke/spisesteder-og-kaffebarer"
+    url = "https://www.sio.no/en/food-and-beverage/our-canteens-and-coffeeshops/informatikk-kafeen"
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
 
